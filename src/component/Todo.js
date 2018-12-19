@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class Todo extends Component {
     state = {
-        database: [' satu', ' dua', ' tiga', ' empat'],
+        database: [],
         input: ''
     }
     // menetapkan nilai baru sebagai input baru saat target {input} mengalami perubahan
@@ -17,10 +17,21 @@ class Todo extends Component {
         const { database } = this.state
         const { input } = this.state
         database.push(input)
-        console.log(database)
+        localStorage.setItem('todos', JSON.stringify(database))
         this.setState({
             input: ''
         })
+    }
+
+    getData = () => {
+        let getItem = JSON.parse(localStorage.getItem('todos'))
+        this.setState({
+            database: getItem
+        })
+    }
+
+    componentDidMount() {
+        this.getData()
     }
 
     render() {
